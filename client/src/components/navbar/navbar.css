@@ -1,0 +1,59 @@
+.navbar {
+  background-color: #28a745;
+}
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.imgCentre-nav {
+  width: 3vw;
+  background-color: lightyellow;
+}
+
+.navRight {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+}
+
+.login {
+  padding: 5px;
+}
+
+.register {
+  padding: 5px;
+}
+
+.cart {
+  font-size: 20px;
+}
+
+.counter {
+  position: relative;
+  bottom: 15px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: white;
+  padding: 3px;
+  font-weight: bold;
+  color: black;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon {
+  padding: 10px;
+  display: flex;
+  margin: 10px;
+  justify-content: center;
+  align-items: center;
+}
+.dropdown {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
