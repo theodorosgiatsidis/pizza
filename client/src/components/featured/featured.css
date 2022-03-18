@@ -1,7 +1,7 @@
 .featured-container {
-  height: calc(100vh - 100px);
   overflow: hidden;
   position: relative;
+  min-height: 60vw;
 }
 
 .arrowContainer {
@@ -31,5 +31,5 @@
 .arrow {
   width: 12vw;
   position: relative;
-  bottom: 25vw;
+  bottom: 7vw;
 }

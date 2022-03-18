@@ -1,13 +1,28 @@
 import "./App.css";
-import Featured from "./components/featured/Featured";
+import NewsLetter from "./components/newsletter/NewsLetter";
+import Footer from "./components/footer/Footer";
 import Navbar from "./components/navbar/Navbar";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Home from "./pages/home/Home";
+import Product from "./pages/product/Product";
 
 function App() {
   return (
-    <div className="App">
-      <Navbar />
-      <Featured />
-    </div>
+    <Router>
+      <div className="App">
+        <Navbar />
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route path="/product/:id">
+            <Product />
+          </Route>
+        </Switch>
+        <NewsLetter />
+        <Footer />
+      </div>
+    </Router>
   );
 }
 
