@@ -16,13 +16,17 @@
   cursor: pointer;
   align-items: center;
 }
+.navIcon {
+  padding: 10px;
+  font-size: 20px;
+}
 
 .login {
-  padding: 5px;
+  padding: 10px;
 }
 
 .register {
-  padding: 5px;
+  padding: 10px;
 }
 
 .cart {

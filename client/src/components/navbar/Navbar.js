@@ -1,14 +1,16 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import "./navbar.css";
 import { Dropdown } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
 import { Link } from "react-router-dom";
 import { Popup } from "@progress/kendo-react-popup";
+import { StoreContext } from "../../context/store";
 
 function Navbar() {
   const anchor = useRef();
   const [show, setShow] = useState(false);
   const [cartItems, setCartItems] = useState([]);
+  const { user } = useContext(StoreContext);
 
   const onClick = () => {
     setShow(!show);
@@ -64,8 +66,11 @@ function Navbar() {
           </Dropdown>
         </div>
         <div className="navRight">
-          <div className="login">Login</div>
-          <div className="register">Register</div>
+          {user && <i className="navIcon fa-solid fa-user"></i>}
+          <Link to="/login">{!user && <div className="login">Login</div>}</Link>
+          <Link to="/register">
+            {!user && <div className="register">Register</div>}
+          </Link>
           <i
             ref={anchor}
             onClick={onClick}
