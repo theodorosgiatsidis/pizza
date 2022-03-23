@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import Reducer from "./Reducer";
 
 const INITIAL_STATE = {
@@ -8,12 +8,12 @@ const INITIAL_STATE = {
 };
 
 export const StoreContext = React.createContext({
-  clothes: [],
   ...INITIAL_STATE,
 });
 
 export const StoreContextProvider = (props) => {
   const [state, dispatch] = useReducer(Reducer, INITIAL_STATE);
+  const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(state.user));
@@ -26,6 +26,8 @@ export const StoreContextProvider = (props) => {
         isFetching: state.isFetching,
         error: state.error,
         dispatch,
+        cartItems,
+        setCartItems,
       }}
     >
       {props.children}

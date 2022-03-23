@@ -1,25 +1,24 @@
-import React, { useEffect, useState, useRef, useContext } from "react";
+import React, { useContext } from "react";
 import "./navbar.css";
 import { Dropdown } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
 import { Link } from "react-router-dom";
-import { Popup } from "@progress/kendo-react-popup";
 import { StoreContext } from "../../context/store";
+import {
+  UncontrolledPopover,
+  PopoverHeader,
+  PopoverBody,
+  DropdownItem,
+} from "reactstrap";
 
 function Navbar() {
-  const anchor = useRef();
-  const [show, setShow] = useState(false);
-  const [cartItems, setCartItems] = useState([]);
-  const { user } = useContext(StoreContext);
+  const { user, dispatch } = useContext(StoreContext);
+  const { cartItems } = useContext(StoreContext);
 
-  const onClick = () => {
-    setShow(!show);
+  const handleLogout = () => {
+    dispatch({ type: "LOGOUT" });
+    window.location = "/";
   };
-
-  useEffect(() => {
-    console.log(show);
-    console.log(anchor);
-  }, [show]);
 
   return (
     <div className="navbar">
@@ -66,27 +65,43 @@ function Navbar() {
           </Dropdown>
         </div>
         <div className="navRight">
-          {user && <i className="navIcon fa-solid fa-user"></i>}
+          {user && (
+            <div>
+              <i id="PopoverLegacy" className="navIcon fa-solid fa-user"></i>
+              <div>
+                <UncontrolledPopover
+                  placement="bottom"
+                  target="PopoverLegacy"
+                  autohide={true}
+                >
+                  <PopoverHeader>{user.username}</PopoverHeader>
+                  <PopoverBody>
+                    <DropdownItem href="#/action1">
+                      <span onClick={handleLogout}>Logout</span>
+                    </DropdownItem>
+                  </PopoverBody>
+                </UncontrolledPopover>
+              </div>
+            </div>
+          )}
+
           <Link to="/login">{!user && <div className="login">Login</div>}</Link>
           <Link to="/register">
             {!user && <div className="register">Register</div>}
           </Link>
-          <i
-            ref={anchor}
-            onClick={onClick}
-            className="cart fa-solid fa-cart-shopping"
-          ></i>
+          <i id="ShoppingCard" className="cart fa-solid fa-cart-shopping"></i>
           <div className="counter">2</div>
-
-          <Popup
-            anchor={anchor.current}
-            show={show}
-            popupClass={"popup-content"}
+          <UncontrolledPopover
+            placement="bottom"
+            target="ShoppingCard"
+            autohide={true}
           >
-            <div className="Basket">
+            <PopoverHeader>
+              {" "}
               {cartItems.length === 0 && <h2>Cart Is Empty</h2>}
-            </div>
-          </Popup>
+            </PopoverHeader>
+            <PopoverBody></PopoverBody>
+          </UncontrolledPopover>
         </div>
       </div>
     </div>
