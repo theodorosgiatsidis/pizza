@@ -1,11 +1,10 @@
 .navbar {
   background-color: #28a745;
-}
-.container {
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
 }
+
 .imgCentre-nav {
   width: 3vw;
   background-color: lightyellow;
