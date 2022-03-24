@@ -95,6 +95,14 @@
   color: #29aafe;
   opacity: 1;
 }
+
+.span-msg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+}
+
 @media (max-width: 767px) {
   .login-page main {
     position: static;

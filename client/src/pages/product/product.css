@@ -1,6 +1,6 @@
 .product-container {
   display: flex;
-  min-height: 60vw;
+  padding: 20px;
   margin: 20px;
 }
 
@@ -13,15 +13,17 @@
 }
 
 .product-img {
-  width: 100%;
-  height: 100%;
   position: relative;
-  object-fit: contain;
+  object-fit: cover;
+  top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .product-right {
   flex: 1;
-  padding: 20px;
+  padding: 10px;
 }
 
 .product-price {

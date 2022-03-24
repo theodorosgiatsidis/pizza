@@ -19,7 +19,6 @@ function PizzaList() {
   return (
     <div className="pizzaList">
       <div className="list-wrapper">
-        <h1 className="list-title">THE BEST PIZZA IN TOWN</h1>
         {pizzas.map((pizza) => (
           <PizzaCard
             key={pizza._id}

@@ -1,4 +1,4 @@
-import React, { useRef, useContext } from "react";
+import React, { useRef, useContext, useState } from "react";
 import { StoreContext } from "../../context/store";
 import axios from "axios";
 import "./login.css";
@@ -7,6 +7,7 @@ function Login() {
   const userRef = useRef();
   const passwordRef = useRef();
   const { dispatch, isFetching } = useContext(StoreContext);
+  const [error, setError] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,6 +21,7 @@ function Login() {
       window.location = "/";
     } catch (err) {
       dispatch({ type: "LOGIN_FAILURE" });
+      setError(true);
     }
   };
 
@@ -87,6 +89,11 @@ function Login() {
                   </a>
                 </li>
               </ul>
+              {error && (
+                <span className="span-msg" style={{ color: "red" }}>
+                  Wrong Username or Password!
+                </span>
+              )}
             </div>
           </form>
         </div>

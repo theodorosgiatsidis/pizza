@@ -2,7 +2,7 @@
   background-color: #28a745;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .imgCentre-nav {
