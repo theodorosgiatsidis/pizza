@@ -3,6 +3,8 @@ import "./featured.css";
 
 function Featured() {
   const [index, setIndex] = useState(0);
+  const delay = 3500;
+  const timeoutRef = React.useRef(null);
 
   const images = [
     "/img/featured.png",
@@ -10,40 +12,50 @@ function Featured() {
     "/img/featured3.jpeg",
   ];
 
-  const handleArrow = (direction) => {
-    if (direction === "l") {
-      setIndex(index !== 0 ? index - 1 : 2);
+  function resetTimeout() {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
     }
-    if (direction === "r") {
-      setIndex(index !== 2 ? index + 1 : 0);
-    }
-  };
+  }
+
+  React.useEffect(() => {
+    resetTimeout();
+    timeoutRef.current = setTimeout(
+      () =>
+        setIndex((prevIndex) =>
+          prevIndex === images.length - 1 ? 0 : prevIndex + 1
+        ),
+      delay
+    );
+
+    return () => {
+      resetTimeout();
+    };
+  }, [index]);
 
   return (
-    <div className="featured-container">
+    <div className="slideshow">
       <div
-        className="arrowContainer"
-        style={{ left: -40 }}
-        onClick={() => handleArrow("l")}
+        className="slideshowSlider"
+        style={{ transform: `translate3d(${-index * 100}%, 0, 0)` }}
       >
-        <img className="arrow" src="/img/arrowl.png" alt="" />
-      </div>
-      <div
-        className="wrapper"
-        style={{ transform: `translateX(${-100 * index}vw)` }}
-      >
-        {images.map((img, i) => (
-          <div className="imgContainer" key={i}>
+        {images.map((img, index) => (
+          <div className="slide" key={index}>
             <img src={img} alt="" />
           </div>
         ))}
       </div>
-      <div
-        className="arrowContainer"
-        style={{ right: 0 }}
-        onClick={() => handleArrow("r")}
-      >
-        <img className="arrow" src="/img/arrowr.png" alt="" />
+
+      <div className="slideshowDots">
+        {images.map((_, idx) => (
+          <div
+            key={idx}
+            className={`slideshowDot${index === idx ? " active" : ""}`}
+            onClick={() => {
+              setIndex(idx);
+            }}
+          ></div>
+        ))}
       </div>
     </div>
   );
