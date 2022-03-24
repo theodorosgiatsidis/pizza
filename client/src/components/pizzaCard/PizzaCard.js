@@ -1,26 +1,24 @@
-import React from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import "./pizzaCard.css";
 
-function PizzaCard() {
+function PizzaCard(props) {
   const history = useHistory();
   const handleClick = () => {
-    history.push("/product/1");
+    history.push(`/pizzas/${props.id}`);
   };
-
   return (
     <div className="pizzaCard">
-      <img
-        onClick={handleClick}
-        src="/img/pizza.png"
-        alt=""
-        style={{ width: "200px", height: "200px" }}
-      />
-      <h1 className="card-title">FIORI DE ZUCCA</h1>
-      <span className="card-price">$19.90</span>
-      <p className="card-desc">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-      </p>
+      <div className="pizzaWrapper">
+        <h1 className="pizza-title">{props.title}</h1>
+        <img
+          className="pizza-img"
+          onClick={handleClick}
+          src={props.picture}
+          alt="pizza"
+        />
+        <p className="pizza-desc">{props.description}</p>
+        <span className="pizza-price">{props.price}€</span>
+      </div>
     </div>
   );
 }

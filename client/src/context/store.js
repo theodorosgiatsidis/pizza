@@ -14,6 +14,7 @@ export const StoreContext = React.createContext({
 export const StoreContextProvider = (props) => {
   const [state, dispatch] = useReducer(Reducer, INITIAL_STATE);
   const [cartItems, setCartItems] = useState([]);
+  const [pizzas, setPizzas] = useState([]);
 
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(state.user));
@@ -28,6 +29,8 @@ export const StoreContextProvider = (props) => {
         dispatch,
         cartItems,
         setCartItems,
+        pizzas,
+        setPizzas,
       }}
     >
       {props.children}
