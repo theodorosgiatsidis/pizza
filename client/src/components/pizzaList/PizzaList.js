@@ -25,7 +25,7 @@ function PizzaList() {
             title={pizza.title}
             picture={pizza.picture}
             description={pizza.description}
-            price={pizza.price}
+            price={pizza.prices}
             id={pizza._id}
           />
         ))}

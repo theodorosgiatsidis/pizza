@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
+import { Pagination } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { StoreContext } from "../../context/store";
 import "./product.css";
@@ -7,15 +8,14 @@ import "./product.css";
 function Product() {
   const [pizza, setPizza] = useState([]);
   const [size, setSize] = useState(0);
-  const [products] = useState([]);
   const { cartItems, setCartItems } = useContext(StoreContext);
-  const [quantity] = useState(1);
+  const [quantity, setQuantity] = useState(1);
   const { id } = useParams();
 
   useEffect(() => {
     getPizza();
     console.log(pizza);
-  }, []);
+  }, [size]);
 
   const getPizza = async () => {
     const res = await axios.get(`/pizzas/${id}`);
@@ -23,27 +23,24 @@ function Product() {
   };
 
   const onAdd = () => {
-    if (!size) {
-      alert("Select a Size Option");
-      return;
-    }
+    const productToAdd = pizza.find((p) => p.size === size);
 
-    if (products) {
-      const exist = cartItems.find((x) => x._id === products._id);
+    if (productToAdd) {
+      const exist = cartItems.find((x) => x._id === productToAdd._id);
 
       if (exist) {
         setCartItems(
           cartItems.map((x) =>
-            x._id === products._id
+            x._id === productToAdd._id
               ? {
                   ...x,
-                  quantity,
+                  quantity: quantity,
                 }
               : x
           )
         );
       } else {
-        setCartItems([...cartItems, { ...products, quantity }]);
+        setCartItems([...cartItems, { ...productToAdd, quantity }]);
       }
     } else {
       alert("Oops product not available");
@@ -64,7 +61,9 @@ function Product() {
       <div className="product-right">
         <h1 className="product-title">{pizza.title}</h1>
         <p className="product-desc">{pizza.description}</p>
-        <span className="product-price">{pizza.price} €</span>
+        {pizza.prices && (
+          <span className="product-price">{pizza.prices[size]}€</span>
+        )}
         <h3 className="product-choose">Choose the size</h3>
         <div className="sizes">
           <div className="pizza-size" onClick={() => setSize(0)}>
@@ -82,52 +81,28 @@ function Product() {
         </div>
         <h3 className="product-choose">Choose additional ingredients</h3>
         <div className="product-ingredients">
-          <div className="product-option">
-            <input
-              type="checkbox"
-              id="double"
-              name="double"
-              className="product-checkbox"
-            />
-            <label htmlFor="double">Double Ingredients</label>
-          </div>
-          <div className="product-option">
-            <input
-              className="product-checkbox"
-              type="checkbox"
-              id="cheese"
-              name="cheese"
-            />
-            <label htmlFor="cheese">Extra Cheese</label>
-          </div>
-          <div className="product-option">
-            <input
-              className="product-checkbox"
-              type="checkbox"
-              id="spicy"
-              name="spicy"
-            />
-            <label htmlFor="spicy">Spicy Sauce</label>
-          </div>
-          <div className="product-option">
-            <input
-              className="product-checkbox"
-              type="checkbox"
-              id="garlic"
-              name="garlic"
-            />
-            <label htmlFor="garlic">Garlic Sauce</label>
-          </div>
+          {pizza.extraOptions &&
+            pizza.extraOptions.map((option, index) => (
+              <div className="product-option" key={index}>
+                <input
+                  type="checkbox"
+                  id={option.text}
+                  name={option.text}
+                  className="product-checkbox"
+                />
+
+                <label htmlFor="garlic">{option.text}</label>
+              </div>
+            ))}
         </div>
         <div className="product-add">
           <input
+            onChange={(e) => setQuantity(e.target.value)}
             type="number"
-            defaultValue={quantity}
+            defaultValue={1}
             className="product-quantity"
           />
-          <button className="product-button" onClick={onAdd}>
-            Add to Cart
-          </button>
+          <button className="product-button">Add to Cart</button>
         </div>
       </div>
     </div>
