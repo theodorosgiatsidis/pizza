@@ -39,3 +39,19 @@
 .slideshowDot.active {
   background-color: #6a0dad;
 }
+
+@media (max-width: 480px) {
+  .slideshow {
+    width: 100%;
+    height: 40vh;
+  }
+
+  .slide img {
+    width: 100%;
+  }
+
+  .slideshowDots {
+    position: relative;
+    bottom: 55vw;
+  }
+}

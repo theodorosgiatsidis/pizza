@@ -102,3 +102,11 @@
   font-weight: 500;
   cursor: pointer;
 }
+
+@media (max-width: 480px) {
+  .product-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}

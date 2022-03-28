@@ -50,3 +50,31 @@
   position: relative;
   border-radius: 0px 23px 23px 0;
 }
+
+@media (max-width: 480px) {
+  .newsletter {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .newsletter-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .subscribe-btn {
+    position: relative;
+    text-align: center;
+    left: 20%;
+    margin-top: 20px;
+  }
+  .form input {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+  }
+}

@@ -60,3 +60,21 @@
   align-items: center;
   flex-direction: column;
 }
+
+@media (max-width: 380px) {
+  .navLeft img {
+    width: 30vw;
+  }
+
+  .navIcon {
+    font-size: 15px;
+  }
+
+  .cart {
+    font-size: 15px;
+  }
+
+  .counter {
+    font-size: 15px;
+  }
+}

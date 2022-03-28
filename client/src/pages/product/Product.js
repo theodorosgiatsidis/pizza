@@ -14,8 +14,7 @@ function Product() {
 
   useEffect(() => {
     getPizza();
-    console.log(pizza);
-  }, [size]);
+  }, []);
 
   const getPizza = async () => {
     const res = await axios.get(`/pizzas/${id}`);
@@ -23,7 +22,7 @@ function Product() {
   };
 
   const onAdd = () => {
-    const productToAdd = pizza.find((p) => p.size === size);
+    const productToAdd = pizza.find((p) => p._id === id);
 
     if (productToAdd) {
       const exist = cartItems.find((x) => x._id === productToAdd._id);
@@ -47,9 +46,9 @@ function Product() {
     }
   };
 
-  // useEffect(() => {
-  //   console.log(cartItems);
-  // }, [cartItems]);
+  useEffect(() => {
+    console.log(cartItems);
+  }, [cartItems]);
 
   return (
     <div className="product-container">
@@ -102,7 +101,9 @@ function Product() {
             defaultValue={1}
             className="product-quantity"
           />
-          <button className="product-button">Add to Cart</button>
+          <button onClick={onAdd} className="product-button">
+            Add to Cart
+          </button>
         </div>
       </div>
     </div>

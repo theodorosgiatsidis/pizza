@@ -17,7 +17,7 @@ function PizzaCard(props) {
           alt="pizza"
         />
         <p className="pizza-desc">{props.description}</p>
-        <span className="pizza-price">9.9€</span>
+        <span className="pizza-price">{props.price[0]}€</span>
       </div>
     </div>
   );
