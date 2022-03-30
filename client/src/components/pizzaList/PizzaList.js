@@ -1,20 +1,10 @@
-import axios from "axios";
 import React, { useContext, useEffect } from "react";
-import { StoreContext } from "../../context/store";
+import usePizzas from "../../hooks/usePizzas";
 import PizzaCard from "../pizzaCard/PizzaCard";
 import "./pizzaList.css";
 
 function PizzaList() {
-  const { pizzas, setPizzas } = useContext(StoreContext);
-
-  useEffect(() => {
-    getPizzas();
-  }, []);
-
-  const getPizzas = async () => {
-    const res = await axios.get("/pizzas");
-    setPizzas(res.data);
-  };
+  const pizzas = usePizzas();
 
   return (
     <div className="pizzaList">
