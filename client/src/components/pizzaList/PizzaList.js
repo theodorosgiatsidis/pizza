@@ -1,4 +1,3 @@
-import React, { useContext, useEffect } from "react";
 import usePizzas from "../../hooks/usePizzas";
 import PizzaCard from "../pizzaCard/PizzaCard";
 import "./pizzaList.css";

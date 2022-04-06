@@ -13,11 +13,34 @@ import {
 
 function Navbar() {
   const { user, dispatch } = useContext(StoreContext);
-  const { cartItems } = useContext(StoreContext);
+  const { cartItems, setCartItems } = useContext(StoreContext);
+  const { quantity, setQuantity } = useContext(StoreContext);
+  const { size } = useContext(StoreContext);
 
   const handleLogout = () => {
     dispatch({ type: "LOGOUT" });
     window.location = "/";
+  };
+
+  const incrementCount = () => {
+    setQuantity(quantity + 1);
+  };
+
+  const decrementCount = () => {
+    setQuantity(quantity - 1);
+  };
+
+  const handleRemove = (product) => {
+    const exist = cartItems.find((x) => x._id === product._id);
+    if (exist.quantity === 1) {
+      setCartItems(cartItems.filter((x) => x._id !== product._id));
+    } else {
+      setCartItems(
+        cartItems.map((x) =>
+          x._id === product._id ? { ...exist, quantity: exist.quantity - 1 } : x
+        )
+      );
+    }
   };
 
   return (
@@ -89,7 +112,7 @@ function Navbar() {
           {!user && <div className="register">Register</div>}
         </Link>
         <i id="ShoppingCard" className="cart fa-solid fa-cart-shopping"></i>
-        <div className="counter">2</div>
+        <div className="counter">{cartItems.length}</div>
         <UncontrolledPopover
           placement="bottom"
           target="ShoppingCard"
@@ -97,12 +120,30 @@ function Navbar() {
         >
           <PopoverHeader>
             {" "}
-            {cartItems.length === 0 && <h2>Cart Is Empty</h2>}
+            {cartItems.length === 0 && <h1>Cart Is Empty</h1>}
           </PopoverHeader>
           <PopoverBody>
-            {cartItems.map((x, index) => (
-              <div key={index}>
-                <h1>quantity: {x.quantity}</h1>
+            {cartItems.map((product, index) => (
+              <div className="cart-items" key={index}>
+                <h1 className="cart-title">{product.title}</h1>
+                <img className="cart-img" src={product.picture} alt="" />
+                <i
+                  onClick={decrementCount}
+                  className=" minus fa-solid fa-minus"
+                ></i>
+                <span className="cart-quantity">{quantity}</span>
+                <i
+                  onClick={incrementCount}
+                  className="plus fa-solid fa-plus"
+                ></i>
+                <span className="cart-size"></span>
+                <span style={{ color: "green" }} className="cart-price">
+                  {product.prices[size] * quantity} €
+                  <i
+                    onClick={() => handleRemove(product)}
+                    className="trash fa-solid fa-trash-can"
+                  ></i>
+                </span>
               </div>
             ))}
           </PopoverBody>

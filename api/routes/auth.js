@@ -1,24 +1,22 @@
 const router = require("express").Router();
 const User = require("../models/User");
-const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const CryptoJS = require("crypto-js");
 
 //REGISTER
 router.post("/register", async (req, res) => {
+  const newUser = new User({
+    username: req.body.username,
+    email: req.body.email,
+    password: CryptoJS.AES.encrypt(
+      req.body.password,
+      process.env.SECRET_KEY
+    ).toString(),
+  });
+
   try {
-    const saltRounds = 10;
-    const myPlaintextPassword = "s0//P4$$w0rD";
-
-    const salt = bcrypt.genSaltSync(saltRounds);
-    const hash = bcrypt.hashSync(myPlaintextPassword, salt);
-
-    const newUser = new User({
-      username: req.body.username,
-      email: req.body.email,
-      password: hash,
-    });
-
     const user = await newUser.save();
-    res.status(200).json(user);
+    res.status(201).json(user);
   } catch (error) {
     res.status(500).json(error);
   }
@@ -27,19 +25,27 @@ router.post("/register", async (req, res) => {
 //LOGIN
 router.post("/login", async (req, res) => {
   try {
-    const myPlaintextPassword = "s0//P4$$w0rD";
-    const user = await User.findOne({ username: req.body.username });
-    if (!user) {
-      return res.send(400).json("Wrong Password or Email");
-    }
+    const user = await User.findOne({
+      username: req.body.username,
+    });
+    !user && res.status(401).json("Wrong password or username ");
+    const bytes = CryptoJS.AES.decrypt(user.password, process.env.SECRET_KEY);
+    const originalPassword = bytes.toString(CryptoJS.enc.Utf8);
 
-    const validated = await bcrypt.compare(myPlaintextPassword, user.password);
-    if (!validated) {
-      return res.send(400).json("Wrong Password or Email");
-    }
+    originalPassword !== req.body.password &&
+      res.status(401).json("Wrong password or username ");
 
-    const { password, ...others } = user._doc;
-    res.status(200).json(others);
+    const accessToken = jwt.sign(
+      {
+        id: user._id,
+        isAdmin: user.isAdmin,
+      },
+      process.env.SECRET_KEY,
+      { expiresIn: "5d" }
+    );
+
+    const { password, ...info } = user._doc;
+    res.status(200).json({ ...info, accessToken });
   } catch (error) {
     res.status(500).json(error);
   }

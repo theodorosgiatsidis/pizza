@@ -1,15 +1,16 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import { Pagination } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { StoreContext } from "../../context/store";
+import usePizzas from "../../hooks/usePizzas";
 import "./product.css";
 
 function Product() {
+  const pizzas = usePizzas();
   const [pizza, setPizza] = useState([]);
-  const [size, setSize] = useState(0);
+  const { size, setSize } = useContext(StoreContext);
   const { cartItems, setCartItems } = useContext(StoreContext);
-  const [quantity, setQuantity] = useState(1);
+  const { quantity } = useContext(StoreContext);
   const { id } = useParams();
 
   useEffect(() => {
@@ -22,8 +23,7 @@ function Product() {
   };
 
   const onAdd = () => {
-    const productToAdd = pizza.find((p) => p._id === id);
-
+    const productToAdd = pizzas.find((p) => p._id === id);
     if (productToAdd) {
       const exist = cartItems.find((x) => x._id === productToAdd._id);
 
@@ -33,7 +33,7 @@ function Product() {
             x._id === productToAdd._id
               ? {
                   ...x,
-                  quantity: quantity,
+                  quantity,
                 }
               : x
           )
@@ -46,9 +46,9 @@ function Product() {
     }
   };
 
-  useEffect(() => {
-    console.log(cartItems);
-  }, [cartItems]);
+  // const uniqueSizes = [
+  //   ...new Map(pizzas.map((item) => [item.sizes, item.sizes])).values(),
+  // ];
 
   return (
     <div className="product-container">
@@ -66,15 +66,15 @@ function Product() {
         <h3 className="product-choose">Choose the size</h3>
         <div className="sizes">
           <div className="pizza-size" onClick={() => setSize(0)}>
-            <img src="/img/size.png" alt="" />
+            <img className="img-1" src="/img/size.png" alt="" />
             <span className="number">Small</span>
           </div>
           <div className="pizza-size" onClick={() => setSize(1)}>
-            <img src="/img/size.png" alt="" />
+            <img className="img-2" src="/img/size.png" alt="" />
             <span className="number">Medium</span>
           </div>
           <div className="pizza-size" onClick={() => setSize(2)}>
-            <img src="/img/size.png" alt="" />
+            <img className="img-3" src="/img/size.png" alt="" />
             <span className="number">Large</span>
           </div>
         </div>
@@ -88,6 +88,7 @@ function Product() {
                   id={option.text}
                   name={option.text}
                   className="product-checkbox"
+                  price={option.price}
                 />
 
                 <label htmlFor="garlic">{option.text}</label>
@@ -95,12 +96,6 @@ function Product() {
             ))}
         </div>
         <div className="product-add">
-          <input
-            onChange={(e) => setQuantity(e.target.value)}
-            type="number"
-            defaultValue={1}
-            className="product-quantity"
-          />
           <button onClick={onAdd} className="product-button">
             Add to Cart
           </button>
