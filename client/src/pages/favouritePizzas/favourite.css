@@ -1,0 +1,15 @@
+.fav-pizzas-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.fav-pizzas {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+

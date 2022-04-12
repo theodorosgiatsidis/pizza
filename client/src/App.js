@@ -10,6 +10,7 @@ import Register from "./pages/register/Register";
 import { StoreContextProvider } from "./context/store";
 import Profile from "./pages/profile/Profile";
 import Andresses from "./pages/andresses/Andresses";
+import Favourite from "./pages/favouritePizzas/Favourite";
 
 function App() {
   return (
@@ -35,6 +36,9 @@ function App() {
             </Route>
             <Route path="/user/andresses">
               <Andresses />
+            </Route>
+            <Route path="/user/favourites">
+              <Favourite />
             </Route>
           </Switch>
           <NewsLetter />

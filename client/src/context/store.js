@@ -17,6 +17,7 @@ export const StoreContextProvider = (props) => {
   const [pizzas, setPizzas] = useState([]);
   const [quantity, setQuantity] = useState(1);
   const [size, setSize] = useState(0);
+  const [favouritePizzas, setFavouritePizzas] = useState([]);
 
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(state.user));
@@ -30,8 +31,19 @@ export const StoreContextProvider = (props) => {
   }, []);
 
   useEffect(() => {
+    const favouritePizzas = JSON.parse(localStorage.getItem("fav-pizzas"));
+    if (favouritePizzas) {
+      setFavouritePizzas(favouritePizzas);
+    }
+  }, []);
+
+  useEffect(() => {
     localStorage.setItem("cart-items", JSON.stringify(cartItems));
   }, [cartItems]);
+
+  useEffect(() => {
+    localStorage.setItem("fav-pizzas", JSON.stringify(favouritePizzas));
+  }, [favouritePizzas]);
 
   return (
     <StoreContext.Provider
@@ -48,6 +60,8 @@ export const StoreContextProvider = (props) => {
         setQuantity,
         size,
         setSize,
+        favouritePizzas,
+        setFavouritePizzas,
       }}
     >
       {props.children}
