@@ -12,13 +12,18 @@ function Product() {
   const { cartItems, setCartItems } = useContext(StoreContext);
   const { quantity } = useContext(StoreContext);
   const { id } = useParams();
+  const { user } = useContext(StoreContext);
 
   useEffect(() => {
     getPizza();
   }, []);
 
   const getPizza = async () => {
-    const res = await axios.get(`/pizzas/${id}`);
+    const res = await axios.get(`/pizzas/${id}`, {
+      headers: {
+        "x-access-token": user.accessToken,
+      },
+    });
     setPizza(res.data);
   };
 

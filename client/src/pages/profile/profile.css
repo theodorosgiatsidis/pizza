@@ -1,0 +1,51 @@
+.profile-form {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    border: none;
+}
+.profile-name {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 5px;
+    margin: 5px;
+    align-items: center;
+
+}
+
+.profile-email {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 5px;
+    margin: 5px;
+    align-items: center;
+}
+
+.profile-password {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 5px;
+    margin: 5px;
+    align-items: center;
+}
+
+.profile-button {
+    color: black;
+    background-color: orange;
+    border-radius: 10px;
+    width: 12vw;
+    border: none;
+    padding: 10px;
+    margin: 10px;
+}
+
+.fa{
+    font-size: 20px;
+    position: relative;
+    top: 25px;
+    right: 110px;   
+}

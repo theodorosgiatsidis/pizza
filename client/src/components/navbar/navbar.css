@@ -117,6 +117,11 @@
   cursor: pointer;
 }
 
+.popover-header {
+  text-align: center;
+  font-weight: bold;
+}
+
 @media (max-width: 380px) {
   .navLeft img {
     width: 30vw;

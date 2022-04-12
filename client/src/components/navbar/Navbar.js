@@ -98,7 +98,19 @@ function Navbar() {
               >
                 <PopoverHeader>{user.username}</PopoverHeader>
                 <PopoverBody>
-                  <DropdownItem href="#/action1">
+                  <DropdownItem href="/user/profile/">
+                    <span>Edit Profile</span>
+                  </DropdownItem>
+                  <DropdownItem href="/user/andresses">
+                    <span>My Adresses</span>
+                  </DropdownItem>
+                  <DropdownItem href="/user/orders">
+                    <span>Order History</span>
+                  </DropdownItem>
+                  <DropdownItem href="/user/favourites">
+                    <span>My Favourites</span>
+                  </DropdownItem>
+                  <DropdownItem>
                     <span onClick={handleLogout}>Logout</span>
                   </DropdownItem>
                 </PopoverBody>

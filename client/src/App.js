@@ -8,6 +8,8 @@ import Product from "./pages/product/Product";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import { StoreContextProvider } from "./context/store";
+import Profile from "./pages/profile/Profile";
+import Andresses from "./pages/andresses/Andresses";
 
 function App() {
   return (
@@ -27,6 +29,12 @@ function App() {
             </Route>
             <Route path="/register">
               <Register />
+            </Route>
+            <Route path="/user/profile">
+              <Profile />
+            </Route>
+            <Route path="/user/andresses">
+              <Andresses />
             </Route>
           </Switch>
           <NewsLetter />

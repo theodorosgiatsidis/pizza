@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Pizza = require("../models/Pizza");
+const auth = require("../middleware/auth");
 
 //CREATE A PRODUCT
 router.post("/", async (req, res) => {
